@@ -1,0 +1,150 @@
+#include <iostream>
+using namespace std;
+
+#define MAX 50
+
+// ========== MIN HEAP ==========
+class MinHeap {
+    int heap[MAX];
+    int size;
+
+public:
+    MinHeap() {
+        size = 0;
+    }
+
+    void insert(int value) {
+        heap[size] = value;
+        int i = size;
+
+        while (i != 0 && heap[(i - 1) / 2] > heap[i]) {
+            swap(heap[i], heap[(i - 1) / 2]);
+            i = (i - 1) / 2;
+        }
+        size++;
+    }
+
+    void deleteMin() {
+        if (size == 0) {
+            cout << "Min Heap is empty!\n";
+            return;
+        }
+
+        cout << "Deleted Min: " << heap[0] << endl;
+        heap[0] = heap[size - 1];
+        size--;
+
+        heapify(0);
+    }
+
+    void heapify(int i) {
+        int smallest = i;
+        int left = 2 * i + 1;
+        int right = 2 * i + 2;
+
+        if (left < size && heap[left] < heap[smallest])
+            smallest = left;
+
+        if (right < size && heap[right] < heap[smallest])
+            smallest = right;
+
+        if (smallest != i) {
+            swap(heap[i], heap[smallest]);
+            heapify(smallest);
+        }
+    }
+
+    void display() {
+        cout << "Min Heap: ";
+        for (int i = 0; i < size; i++)
+            cout << heap[i] << " ";
+        cout << endl;
+    }
+};
+
+// ========== MAX HEAP ==========
+class MaxHeap {
+    int heap[MAX];
+    int size;
+
+public:
+    MaxHeap() {
+        size = 0;
+    }
+
+    void insert(int value) {
+        heap[size] = value;
+        int i = size;
+
+        while (i != 0 && heap[(i - 1) / 2] < heap[i]) {
+            swap(heap[i], heap[(i - 1) / 2]);
+            i = (i - 1) / 2;
+        }
+        size++;
+    }
+
+    void deleteMax() {
+        if (size == 0) {
+            cout << "Max Heap is empty!\n";
+            return;
+        }
+
+        cout << "Deleted Max: " << heap[0] << endl;
+        heap[0] = heap[size - 1];
+        size--;
+
+        heapify(0);
+    }
+
+    void heapify(int i) {
+        int largest = i;
+        int left = 2 * i + 1;
+        int right = 2 * i + 2;
+
+        if (left < size && heap[left] > heap[largest])
+            largest = left;
+
+        if (right < size && heap[right] > heap[largest])
+            largest = right;
+
+        if (largest != i) {
+            swap(heap[i], heap[largest]);
+            heapify(largest);
+        }
+    }
+
+    void display() {
+        cout << "Max Heap: ";
+        for (int i = 0; i < size; i++)
+            cout << heap[i] << " ";
+        cout << endl;
+    }
+};
+
+int main() {
+    MinHeap minH;
+    MaxHeap maxH;
+
+    
+    minH.insert(10);
+    minH.insert(20);
+    minH.insert(5);
+    minH.insert(30);
+
+    maxH.insert(10);
+    maxH.insert(20);
+    maxH.insert(5);
+    maxH.insert(30);
+
+    
+    minH.display();
+    maxH.display();
+
+    minH.deleteMin();
+    maxH.deleteMax();
+
+    minH.display();
+    maxH.display();
+
+    return 0;
+}
