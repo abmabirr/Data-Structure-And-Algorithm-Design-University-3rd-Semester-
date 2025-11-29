@@ -24,7 +24,7 @@ int main() {
     int position = -1;
     for(int i = 0; i < n; i++) {
         if(arr[i] == key) {
-            position = i;   // store index
+            position = i;  
             break;
         }
     }
